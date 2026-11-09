@@ -1,0 +1,54 @@
+# примеры API-запросов
+
+@baseUrl = http://127.0.0.1:8000/api
+@token = 919189a2ac038f1847b5acc745ac2460fc83acb8
+
+# 1. получение объявлений (без токена)
+GET {{baseUrl}}/advertisements/
+Content-Type: application/json
+
+###
+
+# 2. создание объявления (с токеном)
+POST {{baseUrl}}/advertisements/
+Content-Type: application/json
+Authorization: Token {{token}}
+
+{
+  "title": "Шкаф IKEA",
+  "description": "Срочно"
+}
+
+###
+
+# 3. попытка поменять объявление (с токеном)
+PATCH {{baseUrl}}/advertisements/1/
+Content-Type: application/json
+Authorization: Token {{token}}
+
+{
+  "status": "CLOSED"
+}
+
+###
+
+### 4. Попытка изменить чужое объявление
+PATCH {{baseUrl}}/advertisements/1/
+Content-Type: application/json
+Authorization: Token e514f91203baacc453c9d93987be9a589e184ca4
+
+
+{
+  "status": "CLOSED"
+}
+
+# 5. фильтрация по дате
+
+GET {{baseUrl}}/advertisements/?created_at_before=2030-01-01
+Content-Type: application/json
+
+###
+
+# 6. фильтрация по статусу
+GET {{baseUrl}}/advertisements/?status=OPEN
+Content-Type: application/json
